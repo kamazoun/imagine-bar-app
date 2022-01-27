@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'listing.dart';
-import 'listingmodel.dart';
+import '../models/listing.dart';
+import '../controller/listing_controller.dart';
 
 class CreateListing extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -13,7 +13,8 @@ class CreateListing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listingsModel = Provider.of<ListingModel>(context, listen: false);
+    final listingsModel =
+        Provider.of<ListingController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a new Item to Inventory'),
@@ -64,7 +65,7 @@ class CreateListing extends StatelessWidget {
     );
   }
 
-  createItem(context, ListingModel listingsModel) {
+  createItem(context, ListingController listingsModel) {
     if (nameController.text.isEmpty ||
         stockController.text.isEmpty ||
         priceController.text.isEmpty) {

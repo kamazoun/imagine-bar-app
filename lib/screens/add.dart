@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'listingmodel.dart';
+import '../controller/listing_controller.dart';
 
 class Add extends StatelessWidget {
   final TextEditingController addedController = TextEditingController();
@@ -11,7 +11,8 @@ class Add extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listingsModel = Provider.of<ListingModel>(context, listen: false);
+    final listingsModel =
+        Provider.of<ListingController>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +108,7 @@ class SelectedItemText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ListingModel>(
+    return Consumer<ListingController>(
       builder: (context, listing, child) {
         return Text(
           listing.selectedItem ?? 'Please Select the item to record',

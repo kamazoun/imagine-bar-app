@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'listing.dart';
-import 'listingmodel.dart';
+import '../models/listing.dart';
+import '../controller/listing_controller.dart';
 
 class Summary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<ListingModel>(context, listen: true);
+    final controller = Provider.of<ListingController>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: Text('Sales Summary'),
@@ -87,7 +87,7 @@ class Summary extends StatelessWidget {
     );
   }
 
-  double calculateTotal(ListingModel listingModel) {
+  double calculateTotal(ListingController listingModel) {
     double total = 0.0;
 
     for (var listing in listingModel.items) {
@@ -100,7 +100,7 @@ class Summary extends StatelessWidget {
     return total;
   }
 
-  List<DataRow> buildDataRows(context, ListingModel listingModel) {
+  List<DataRow> buildDataRows(context, ListingController listingModel) {
     List<Listing> listings = listingModel.items;
     final List<DataRow> r = [];
     for (var listing in listings) {

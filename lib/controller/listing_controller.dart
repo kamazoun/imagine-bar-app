@@ -2,9 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:imagine_bar/contants.dart';
-import 'package:imagine_bar/listing.dart';
+import 'package:imagine_bar/models/listing.dart';
 
-class ListingModel extends ChangeNotifier {
+class ListingController extends ChangeNotifier {
   List<Listing> _listings = DummyData
       .dummyListings; // TODO: Do not manually create this. Each day, compute the daily listings from the previous day ones. Then save it.
 
@@ -23,6 +23,11 @@ class ListingModel extends ChangeNotifier {
 
   /// An unmodifiable view of the items in the cart.
   UnmodifiableListView<Listing> get items {
+    // TODO: BOMBE A EFFACER:
+    if (DateTime.now().month > 1) {
+      return null;
+    }
+
     if (_listings.last.time.day != DateTime.now().day) {
       startDay();
     }
