@@ -4,7 +4,7 @@ class DummyData {
   static List<Listing> dummyListings = [
     Listing(
       id: '1',
-      name: 'sminoff ice',
+      foodName: 'sminoff ice',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 2,
       itemPrice: 120,
@@ -13,7 +13,7 @@ class DummyData {
     ),
     Listing(
       id: '2',
-      name: 'savanah',
+      foodName: 'savanah',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 170,
@@ -22,7 +22,7 @@ class DummyData {
     ),
     Listing(
       id: '3',
-      name: 'guiness',
+      foodName: 'guiness',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 3,
       itemPrice: 90,
@@ -31,7 +31,7 @@ class DummyData {
     ),
     Listing(
       id: '4',
-      name: 'club (big)',
+      foodName: 'club (big)',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 15,
       itemPrice: 60,
@@ -40,7 +40,7 @@ class DummyData {
     ),
     Listing(
       id: '5',
-      name: 'club(mini)',
+      foodName: 'club(mini)',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 10,
       itemPrice: 90,
@@ -49,7 +49,7 @@ class DummyData {
     ),
     Listing(
       id: '6',
-      name: 'eagle',
+      foodName: 'eagle',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 60,
@@ -58,7 +58,7 @@ class DummyData {
     ),
     Listing(
       id: '7',
-      name: 'gulder',
+      foodName: 'gulder',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 60,
@@ -67,7 +67,7 @@ class DummyData {
     ),
     Listing(
       id: '8',
-      name: 'club shady',
+      foodName: 'club shady',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 2,
       itemPrice: 50,
@@ -76,7 +76,7 @@ class DummyData {
     ),
     Listing(
       id: '9',
-      name: 'kiss',
+      foodName: 'kiss',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 170,
@@ -85,7 +85,7 @@ class DummyData {
     ),
     Listing(
       id: '10',
-      name: 'hunters',
+      foodName: 'hunters',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 170,
@@ -94,7 +94,7 @@ class DummyData {
     ),
     Listing(
       id: '11',
-      name: 'henniken (bottle)',
+      foodName: 'henniken (bottle)',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 2,
       itemPrice: 170,
@@ -103,7 +103,7 @@ class DummyData {
     ),
     Listing(
       id: '12',
-      name: 'fox',
+      foodName: 'fox',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 140,
@@ -112,7 +112,7 @@ class DummyData {
     ),
     Listing(
       id: '13',
-      name: 'panache',
+      foodName: 'panache',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 65,
@@ -121,7 +121,7 @@ class DummyData {
     ),
     Listing(
       id: '14',
-      name: 'cocktail can',
+      foodName: 'cocktail can',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 86,
@@ -130,7 +130,7 @@ class DummyData {
     ),
     Listing(
       id: '15',
-      name: 'malt plastic bott',
+      foodName: 'malt plastic bott',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 3,
       itemPrice: 38,
@@ -139,7 +139,7 @@ class DummyData {
     ),
     Listing(
       id: '16',
-      name: 'malt can',
+      foodName: 'malt can',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 90,
@@ -148,7 +148,7 @@ class DummyData {
     ),
     Listing(
       id: '17',
-      name: 'mineral (can)',
+      foodName: 'mineral (can)',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 3,
       itemPrice: 78,
@@ -157,7 +157,7 @@ class DummyData {
     ),
     Listing(
       id: '18',
-      name: 'pepsi bottle',
+      foodName: 'pepsi bottle',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 2,
       itemPrice: 28,
@@ -166,7 +166,7 @@ class DummyData {
     ),
     Listing(
       id: '19',
-      name: 'don simon',
+      foodName: 'don simon',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 100,
@@ -175,7 +175,7 @@ class DummyData {
     ),
     Listing(
       id: '20',
-      name: 'series',
+      foodName: 'series',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 130,
@@ -184,7 +184,7 @@ class DummyData {
     ),
     Listing(
       id: '21',
-      name: 'vitamilk',
+      foodName: 'vitamilk',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 104,
@@ -193,7 +193,7 @@ class DummyData {
     ),
     Listing(
       id: '22',
-      name: 'welch',
+      foodName: 'welch',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 4,
       itemPrice: 120,
@@ -202,7 +202,7 @@ class DummyData {
     ),
     Listing(
       id: '23',
-      name: 'rush energy drink',
+      foodName: 'rush energy drink',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 21,
@@ -211,7 +211,7 @@ class DummyData {
     ),
     Listing(
       id: '24',
-      name: '5 star energy drink',
+      foodName: '5 star energy drink',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 21,
@@ -220,7 +220,7 @@ class DummyData {
     ),
     Listing(
       id: '25',
-      name: 'storm energy drink (big)',
+      foodName: 'storm energy drink (big)',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 34,
@@ -229,7 +229,7 @@ class DummyData {
     ),
     Listing(
       id: '26',
-      name: 'red bull',
+      foodName: 'red bull',
       time: DateTime.now().subtract(Duration(days: 1)),
       quantitySold: 1,
       itemPrice: 180,

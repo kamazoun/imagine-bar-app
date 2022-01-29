@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/listing.dart';
-import '../controller/listing_controller.dart';
+import '../controllers/listing_controller.dart';
 
 class CreateListing extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -13,16 +13,17 @@ class CreateListing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listingsModel =
-        Provider.of<ListingController>(context, listen: false);
+    return Container();
+    //final listingsModel = Provider.of<ListingController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a new Item to Inventory'),
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () => createItem(context, listingsModel))
+            icon: Icon(Icons.save),
+            //onPressed: () => createItem(context, listingsModel)
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -56,7 +57,7 @@ class CreateListing extends StatelessWidget {
                 endIndent: 25.0,
               ),
               OutlinedButton(
-                  onPressed: () => createItem(context, listingsModel),
+                  // onPressed: () => createItem(context, listingsModel),
                   child: Text('Ok'))
             ],
           ),
@@ -65,7 +66,7 @@ class CreateListing extends StatelessWidget {
     );
   }
 
-  createItem(context, ListingController listingsModel) {
+  /* createItem(context, ListingController listingsModel) {
     if (nameController.text.isEmpty ||
         stockController.text.isEmpty ||
         priceController.text.isEmpty) {
@@ -73,7 +74,7 @@ class CreateListing extends StatelessWidget {
     }
 
     for (var listing in listingsModel.items) {
-      if (listing.name == nameController.text.trim()) {
+      if (listing.foodName == nameController.text.trim()) {
         return;
       }
     }
@@ -85,9 +86,10 @@ class CreateListing extends StatelessWidget {
         addedStock: int.parse(stockController.text.trim()),
         quantitySold: 0,
         time: DateTime.now(),
-        name: nameController.text.trim());
+        foodName: nameController.text.trim());
     listingsModel.create(newItem);
 
     Navigator.pop(context);
   }
+*/
 }

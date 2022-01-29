@@ -1,24 +1,25 @@
+/*
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
-import 'package:imagine_bar/contants.dart';
+import 'package:get/get.dart';
+import 'package:imagine_bar/constants.dart';
 import 'package:imagine_bar/models/listing.dart';
 
-class ListingController extends ChangeNotifier {
-  List<Listing> _listings = DummyData
-      .dummyListings; // TODO: Do not manually create this. Each day, compute the daily listings from the previous day ones. Then save it.
+class ListingController extends GetxController {
+  RxList<Listing> _listings = RxList<Listing>(
+      []); //DummyData.dummyListings; // TODO: Do not manually create this. Each day, compute the daily listings from the previous day ones. Then save it.
 
   String selectedItem;
   DateTime selectedDate = DateTime.now();
 
   void setSelectedItem(val) {
     selectedItem = val;
-    notifyListeners();
+    update();
   }
 
   void setSelectedDate(val) {
     selectedDate = val;
-    notifyListeners();
+    update();
   }
 
   /// An unmodifiable view of the items in the cart.
@@ -39,31 +40,29 @@ class ListingController extends ChangeNotifier {
   /// cart from the outside.
   void create(Listing listing) {
     _listings.add(listing);
-    // This call tells the widgets that are listening to this model to rebuild.
-    notifyListeners();
   }
 
   void add(int added, int sold) {
     final old = items.singleWhere((i) =>
-        i.name == selectedItem &&
+        i.foodName == selectedItem &&
         i.time.day == DateTime.now().day &&
         i.time.month == DateTime.now().month);
 
     old.addedStock += added;
     old.quantitySold += sold;
 
-    notifyListeners();
+    update(); // we update because it is the value inside the reactive list that is changed not the list itself
   }
 
   /// Removes all items from the cart.
   void removeAll() {
     _listings.clear();
     // This call tells the widgets that are listening to this model to rebuild.
-    notifyListeners();
   }
 
   int nextId() {
-    return int.parse(_listings.last.id) + 1;
+    return int.parse(_listings.last.id) +
+        1; // TODO: Use firebase automatic id assignment
   }
 
   void startDay() {
@@ -78,15 +77,7 @@ class ListingController extends ChangeNotifier {
     }
     _listings.addAll(t);
 
-    notifyListeners();
-  }
-
-  void fuse() {
-    List<String> names = [];
-    for (var listing in _listings) {
-      if (names.contains(listing.name)) {
-        //_listings.where((l) => l.name == listing.name).first.
-      }
-    }
+    update();
   }
 }
+*/

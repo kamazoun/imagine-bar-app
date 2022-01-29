@@ -1,8 +1,9 @@
+/*
 import 'package:flutter/material.dart';
+import 'package:imagine_bar/controllers/listing_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../models/listing.dart';
-import '../controller/listing_controller.dart';
 
 class Summary extends StatelessWidget {
   @override
@@ -108,7 +109,7 @@ class Summary extends StatelessWidget {
           listing.time.month == listingModel.selectedDate.month &&
           listing.time.day == listingModel.selectedDate.day) {
         r.add(DataRow(cells: [
-          DataCell(Text(listing.name)),
+          DataCell(Text(listing.foodName)),
           DataCell(Text(listing.quantitySold?.toString() ?? '-')),
           DataCell(Text('¢${listing.itemPrice}')),
           DataCell(Text('¢${listing.totalPrice}')),
@@ -118,3 +119,4 @@ class Summary extends StatelessWidget {
     return r;
   }
 }
+*/

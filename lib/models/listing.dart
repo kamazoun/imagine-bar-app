@@ -1,8 +1,10 @@
 class Listing {
   final String id;
-  final String name;
+  final String
+      foodId; // I added it here so that everytime a drink is ordered or replenished in the stock, its listing can be updated
+  final String foodName;
   DateTime time;
-  final int openingStock;
+  final int openingStock; // Opening stock
   int addedStock;
   final double itemPrice;
   int quantitySold;
@@ -10,7 +12,8 @@ class Listing {
 
   Listing({
     this.id,
-    this.name,
+    this.foodId,
+    this.foodName,
     this.time,
     this.openingStock,
     this.addedStock,
@@ -34,7 +37,7 @@ class Listing {
   }) {
     return Listing(
         id: id ?? this.id,
-        name: name ?? this.name,
+        foodName: name ?? this.foodName,
         time: time ?? this.time,
         openingStock: openingStock ?? this.openingStock,
         addedStock: addedStock ?? this.addedStock,

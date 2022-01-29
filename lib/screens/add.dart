@@ -1,8 +1,9 @@
+/*
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/listing_controller.dart';
+import '../controllers/listing_controller.dart';
 
 class Add extends StatelessWidget {
   final TextEditingController addedController = TextEditingController();
@@ -85,7 +86,7 @@ class Add extends StatelessWidget {
     final List<PopupMenuItem> r = [];
     final List<String> isIn = [];
     for (var item in listings) {
-      final name = item.name;
+      final name = item.foodName;
       if (isIn.contains(name)) {
         continue;
       }
@@ -125,3 +126,4 @@ class SelectedItemText extends StatelessWidget {
     );
   }
 }
+*/
