@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/foodController.dart';
+import 'package:imagine_bar/models/condiment.dart';
 import 'package:imagine_bar/models/drink.dart';
 
 class CreateCondiment extends StatelessWidget {
@@ -32,15 +33,6 @@ class CreateCondiment extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              PopupMenuButton(
-                child: SelectedItemText(),
-                itemBuilder: (context) {
-                  return buildPopUpMenu();
-                },
-                onSelected: (val) {
-                  foodController.setSelectedDrinkCategory(val);
-                },
-              ),
               TextField(
                 keyboardType: TextInputType.name,
                 controller: nameController,
@@ -87,55 +79,13 @@ class CreateCondiment extends StatelessWidget {
       }
     }
 
-    final newItem = Drink(
+    final newItem = Condiment(
         cost: double.parse(priceController.text),
         stock: int.parse(stockController.text.trim()),
-        time: DateTime.now(),
-        name: nameController.text.trim(),
-        category: foodController.selectedDrinkCategory);
+        name: nameController.text.trim());
 
-    foodController.createDrink(newItem);
+    foodController.createCondiment(newItem);
 
     Navigator.pop(context);
-  }
-
-  List<PopupMenuItem> buildPopUpMenu() {
-    final List<PopupMenuItem> r = [];
-
-    for (var item in DrinkCategory.values) {
-      final name = localizedDrinkCategory[item];
-      r.add(
-        PopupMenuItem(
-          child: Text(name),
-          value: item,
-        ),
-      );
-    }
-    return r;
-  }
-}
-
-class SelectedItemText extends StatelessWidget {
-  const SelectedItemText({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<FoodController>(
-      builder: (interface) {
-        return Text(
-          localizedDrinkCategory[interface.selectedDrinkCategory],
-          style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              shadows: [
-                Shadow(
-                    color: Colors.grey, blurRadius: 5, offset: Offset(-2, -1))
-              ],
-              decoration: TextDecoration.underline),
-        );
-      },
-    );
   }
 }

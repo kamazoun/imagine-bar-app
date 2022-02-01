@@ -1,4 +1,10 @@
+import 'package:get/get.dart';
+import 'package:imagine_bar/controllers/foodController.dart';
 import 'package:imagine_bar/models/condiment.dart';
+
+final localizedFoodCategory = {
+  FoodCategory.defaultCategory: 'default',
+};
 
 enum FoodCategory { defaultCategory }
 
@@ -14,23 +20,27 @@ class Food {
   Food(
       {this.id, this.name, this.category, this.cost, this.time, this.portions});
 
-  Food.fromJson(Map<String, Object> json)
+  Food.fromJson(String id, Map<String, Object> json)
       : this(
-            id: json['id'] as String,
+            id: id,
             name: json['name'] as String,
             category: FoodCategory.values[(json['category'])],
             cost: json['cost'],
             time: DateTime.fromMillisecondsSinceEpoch(json['time']),
-            portions: json['portions']);
+            portions: _buildPortions(json['portions'] as Map<String, dynamic>));
 
   Map<String, Object> toJson() {
+    Map<String, dynamic> mappedPortions = {};
+    for (MapEntry<Condiment, int> entry in portions.entries) {
+      mappedPortions.addAll({entry.key.id: entry.value});
+    }
     return {
       //'id': id,
       'name': name,
       'category': category.index,
       'cost': cost,
       'time': time.millisecondsSinceEpoch,
-      'portions': portions
+      'portions': mappedPortions,
     };
   }
 
@@ -42,5 +52,20 @@ class Food {
         cost: cost ?? this.cost,
         time: time ?? this.time,
         portions: portions ?? this.portions);
+  }
+
+  static Map<Condiment, int> _buildPortions(Map<String, dynamic> data) {
+    final FoodController foodController = Get.find<FoodController>();
+
+    Map<Condiment, int> r = {};
+    for (MapEntry<String, dynamic> entry in data.entries) {
+      final Condiment c = foodController.condiments
+          .firstWhereOrNull((element) => element.id == entry.key.trim());
+
+      if (null != c) {
+        r.addAll({c: int.parse(entry.value)});
+      }
+    }
+    return r;
   }
 }

@@ -17,6 +17,8 @@ class FoodController extends GetxController {
   List<Food> get foods => _foods;
 
   DrinkCategory selectedDrinkCategory = DrinkCategory.values[0];
+  FoodCategory selectedFoodCategory = FoodCategory.values[0];
+  Map<Condiment, int> portions = {};
 
   FoodController() {
     setAllDrinks();
@@ -26,23 +28,22 @@ class FoodController extends GetxController {
 
   setAllDrinks() async {
     final d = await DrinkFirestore.getAllDrinks();
-    _drinks.setAll(0, d);
+    _drinks.assignAll(d);
   }
 
   setAllCondiments() async {
     final c = await CondimentFirestore.getAllCondiments();
-    _condiments.setAll(0, c);
+    _condiments.assignAll(c);
   }
 
   setAllFoods() async {
     final f = await FoodFirestore.getAllFoods();
-    _foods.setAll(0, f);
+    _foods.assignAll(f);
   }
 
   Future<List<Drink>> getEmptyDrinks() async {
     // Maybe take from _drinks? But what if meanwhile some drinks are updated?
     final drinks = await DrinkFirestore.getEmptyDrinks();
-    //_drinks.setAll(0, d);
     return drinks;
   }
 
@@ -61,8 +62,42 @@ class FoodController extends GetxController {
     update(); // Surprisingly without that, after adding GetX does not automatically refresh.
   }
 
+  createFood(Food food) async {
+    final DocumentReference r = await FoodFirestore.createFood(food);
+    _foods.add(food.copyWith(id: r.id));
+
+    update(); // Surprisingly without that, after adding GetX does not automatically refresh.
+  }
+
   void setSelectedDrinkCategory(category) {
     selectedDrinkCategory = category;
     update();
+  }
+
+  void setSelectedFoodCategory(category) {
+    selectedFoodCategory = category;
+    update();
+  }
+
+  void setPortions(val) {
+    portions.addAll({val as Condiment: 1});
+    update();
+  }
+
+  void increasePortions(Condiment val) {
+    if (portions.containsKey(val)) {
+      portions[val] += 1;
+      update();
+    }
+  }
+
+  void decreasePortions(Condiment val) {
+    if (portions.containsKey(val)) {
+      portions[val] -= 1;
+      if (portions[val] <= 0) {
+        portions.remove(val);
+      }
+      update();
+    }
   }
 }

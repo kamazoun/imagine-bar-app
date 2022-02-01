@@ -6,7 +6,8 @@ class DrinkFirestore {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static CollectionReference _drinksRef =
       _firestore.collection('drinks').withConverter<Drink>(
-            fromFirestore: (snapshot, _) => Drink.fromJson(snapshot.data()),
+            fromFirestore: (snapshot, _) =>
+                Drink.fromJson(snapshot.id, snapshot.data()),
             toFirestore: (drink, _) => drink.toJson(),
           );
 
@@ -23,9 +24,7 @@ class DrinkFirestore {
         .get()
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
-    return drinks
-        .map((QueryDocumentSnapshot e) => Drink.fromJson(e.data()))
-        .toList();
+    return drinks.map((QueryDocumentSnapshot e) => e.data() as Drink).toList();
   }
 
   static Future<List<Drink>> getEmptyDrinks() async {
@@ -35,7 +34,7 @@ class DrinkFirestore {
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
     return drinks
-        .map((QueryDocumentSnapshot e) => Drink.fromJson(e.data()))
+        .map((QueryDocumentSnapshot e) => Drink.fromJson(e.id, e.data()))
         .toList();
   }
 

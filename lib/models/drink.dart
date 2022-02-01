@@ -36,9 +36,9 @@ class Drink {
 
   Drink({this.id, this.name, this.category, this.cost, this.time, this.stock});
 
-  Drink.fromJson(Map<String, Object> json)
+  Drink.fromJson(String id, Map<String, Object> json)
       : this(
-            id: json['id'] as String,
+            id: id,
             name: json['name'] as String,
             category: DrinkCategory.values[(json['category'])],
             cost: json['cost'],

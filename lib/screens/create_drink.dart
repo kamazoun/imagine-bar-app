@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/foodController.dart';
 import 'package:imagine_bar/models/drink.dart';
+import 'package:imagine_bar/screens/widgets/selected_item_text.dart';
 
 class CreateDrink extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -112,30 +113,5 @@ class CreateDrink extends StatelessWidget {
       );
     }
     return r;
-  }
-}
-
-class SelectedItemText extends StatelessWidget {
-  const SelectedItemText({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<FoodController>(
-      builder: (interface) {
-        return Text(
-          localizedDrinkCategory[interface.selectedDrinkCategory],
-          style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              shadows: [
-                Shadow(
-                    color: Colors.grey, blurRadius: 5, offset: Offset(-2, -1))
-              ],
-              decoration: TextDecoration.underline),
-        );
-      },
-    );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:imagine_bar/screens/create_condiment.dart';
 import 'package:imagine_bar/screens/create_drink.dart';
+import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_listing.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -27,6 +30,19 @@ class MainDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => CreateDrink()));
+            },
+          ),
+          ListTile(
+            title: Text('Add Condiment to kitchen'),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => CreateCondiment()));
+            },
+          ),
+          ListTile(
+            title: Text('Add Food to the menu'),
+            onTap: () {
+              Get.to(() => CreateFood());
             },
           ),
           ListTile(

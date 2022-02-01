@@ -7,9 +7,9 @@ class Condiment {
 
   Condiment({this.id, this.name, this.cost, this.stock, this.unit});
 
-  Condiment.fromJson(Map<String, Object> json)
+  Condiment.fromJson(String id, Map<String, Object> json)
       : this(
-            id: json['id'] as String,
+            id: id,
             name: json['name'] as String,
             cost: json['cost'],
             stock: json['stock'],

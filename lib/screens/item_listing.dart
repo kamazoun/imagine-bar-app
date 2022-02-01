@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/foodController.dart';
 import 'package:imagine_bar/screens/create_listing.dart';
 import 'package:imagine_bar/screens/widgets/drink_listing.dart';
+import 'package:imagine_bar/screens/widgets/food_listing.dart';
 import 'package:imagine_bar/screens/widgets/main_drawer.dart';
 
-class FoodListing extends StatelessWidget {
-  const FoodListing({
+class ItemListing extends StatelessWidget {
+  const ItemListing({
     Key key,
   }) : super(key: key);
 
@@ -14,13 +15,6 @@ class FoodListing extends StatelessWidget {
   Widget build(BuildContext context) {
     final FoodController foodController = Get.find<FoodController>();
 
-    /*GetX<ListingController>(
-      builder: (controller) {
-        print("count 1 rebuild");
-        return Text('${listingController.selectedItem.value}');
-      },
-    ),
-*/
     return Scaffold(
       drawer: MainDrawer(),
       appBar: AppBar(
@@ -54,7 +48,8 @@ class FoodListing extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Text('Foods'),
-          )
+          ),
+          Flexible(flex: 7, child: FoodListing())
         ],
       ),
     );

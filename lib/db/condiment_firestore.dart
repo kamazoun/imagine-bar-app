@@ -6,7 +6,8 @@ class CondimentFirestore {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static CollectionReference _condimentsRef =
       _firestore.collection('condiments').withConverter<Condiment>(
-            fromFirestore: (snapshot, _) => Condiment.fromJson(snapshot.data()),
+            fromFirestore: (snapshot, _) =>
+                Condiment.fromJson(snapshot.id, snapshot.data()),
             toFirestore: (condiment, _) => condiment.toJson(),
           );
 
@@ -24,7 +25,7 @@ class CondimentFirestore {
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
     return condiments
-        .map((QueryDocumentSnapshot e) => Condiment.fromJson(e.data()))
+        .map((QueryDocumentSnapshot e) => e.data() as Condiment)
         .toList();
   }
 
@@ -35,7 +36,7 @@ class CondimentFirestore {
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
     return condiments
-        .map((QueryDocumentSnapshot e) => Condiment.fromJson(e.data()))
+        .map((QueryDocumentSnapshot e) => Condiment.fromJson(e.id, e.data()))
         .toList();
   }
 

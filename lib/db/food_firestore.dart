@@ -7,7 +7,8 @@ class FoodFirestore {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static CollectionReference _foodsRef =
       _firestore.collection('foods').withConverter<Food>(
-            fromFirestore: (snapshot, _) => Food.fromJson(snapshot.data()),
+            fromFirestore: (snapshot, _) =>
+                Food.fromJson(snapshot.id, snapshot.data()),
             toFirestore: (food, _) => food.toJson(),
           );
 
@@ -20,13 +21,10 @@ class FoodFirestore {
 
   static Future<List<Food>> getAllFoods() async {
     List<QueryDocumentSnapshot<Object>> foods = await _foodsRef
-        .orderBy('stock')
         .get()
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
-    return foods
-        .map((QueryDocumentSnapshot e) => Food.fromJson(e.data()))
-        .toList();
+    return foods.map((QueryDocumentSnapshot e) => e.data() as Food).toList();
   }
 
   static Future<List<Food>> getEmptyFoodsWithEmptyCondiments(
@@ -37,7 +35,7 @@ class FoodFirestore {
         .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
 
     return foods
-        .map((QueryDocumentSnapshot e) => Food.fromJson(e.data()))
+        .map((QueryDocumentSnapshot e) => Food.fromJson(e.id, e.data()))
         .toList();
   }
 
