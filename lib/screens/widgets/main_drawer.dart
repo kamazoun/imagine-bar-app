@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:imagine_bar/screens/create_condiment.dart';
 import 'package:imagine_bar/screens/create_drink.dart';
 import 'package:imagine_bar/screens/create_food.dart';
-import 'package:imagine_bar/screens/create_listing.dart';
+import 'package:imagine_bar/screens/create_waiter.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
@@ -46,24 +46,16 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text('Add waiter to the team'),
+            onTap: () {
+              Get.to(() => CreateWaiter());
+            },
+          ),
+          ListTile(
             title: Text('Summary'),
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (ctx) => null /*Summary()*/));
-            },
-          ),
-          ListTile(
-            title: Text('Add Sale/Refill record'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => null /*Add()*/));
-            },
-          ),
-          ListTile(
-            title: Text('Create / Add item to inventory'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => CreateListing()));
             },
           ),
         ],

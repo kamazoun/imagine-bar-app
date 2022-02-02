@@ -1,24 +1,32 @@
-/*
 class Waiter {
   final String id;
   final String name;
-  final String photoUrl;
   final DateTime since;
-  final bool gender;
+  final bool gender; // false = female
 
-  Waiter({this.id, this.name, this.photoUrl, this.since, this.gender});
+  Waiter({this.id, this.name, this.since, this.gender});
 
-  Waiter.fromJson(Map<String, Object> json)
+  Waiter.fromJson(String id, Map<String, Object> json)
       : this(
-          title: json['title']! as String,
-          genre: json['genre']! as String,
+          id: id,
+          name: json['name'] as String,
+          since: DateTime.fromMillisecondsSinceEpoch(json['since']),
+          gender: json['gender'],
         );
 
   Map<String, Object> toJson() {
     return {
-      'title': title,
-      'genre': genre,
+      'name': name,
+      'since': since.millisecondsSinceEpoch,
+      'gender': gender,
     };
   }
+
+  Waiter copyWith({id, name, since, gender}) {
+    return Waiter(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        since: since ?? this.since,
+        gender: gender ?? this.gender);
+  }
 }
-*/

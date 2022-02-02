@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:imagine_bar/controllers/foodController.dart';
+import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/models/drink.dart';
 import 'package:imagine_bar/screens/widgets/selected_item_text.dart';
 

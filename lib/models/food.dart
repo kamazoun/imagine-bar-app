@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:imagine_bar/controllers/foodController.dart';
+import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/models/condiment.dart';
 
 final localizedFoodCategory = {
@@ -63,7 +63,7 @@ class Food {
           .firstWhereOrNull((element) => element.id == entry.key.trim());
 
       if (null != c) {
-        r.addAll({c: int.parse(entry.value)});
+        r.addAll({c: entry.value as int});
       }
     }
     return r;
