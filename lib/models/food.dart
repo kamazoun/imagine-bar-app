@@ -4,9 +4,13 @@ import 'package:imagine_bar/models/condiment.dart';
 
 final localizedFoodCategory = {
   FoodCategory.defaultCategory: 'default',
+  FoodCategory.starters: 'starters',
+  FoodCategory.main_meals: 'main meals',
+  FoodCategory.sides: 'sides',
+  FoodCategory.desserts: 'desserts',
 };
 
-enum FoodCategory { defaultCategory }
+enum FoodCategory { defaultCategory, starters, main_meals, sides, desserts }
 
 class Food {
   final String id;
@@ -63,7 +67,7 @@ class Food {
           .firstWhereOrNull((element) => element.id == entry.key.trim());
 
       if (null != c) {
-        r.addAll({c: entry.value as int});
+        r.addAll({c: int.parse(entry.value.toString())});
       }
     }
     return r;

@@ -67,8 +67,10 @@ class CreateFood extends StatelessWidget {
                     return _buildCheckedPopUpMenu(foodController);
                   },
                   child: OutlinedButton(
-                      child: Text(
-                          'Select all the condiments that enter in the preparation of this food')),
+                    child: Text(
+                        'Select all the condiments that enter in the preparation of this food'),
+                    onPressed: null,
+                  ),
                 ),
                 ...foodController.portions.entries.map(
                     (MapEntry<Condiment, int> e) => SelectedPortionItem(

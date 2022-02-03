@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/models/drink.dart';
+import 'package:imagine_bar/screens/edit_drinks.dart';
 
 class DrinkListing extends StatelessWidget {
   @override
@@ -37,7 +38,11 @@ class DrinkListing extends StatelessWidget {
         DataCell(Text('${drink.stock}')),
         DataCell(Text('¢${drink.cost}'), showEditIcon: true, onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => null));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => EditDrink(
+                        drink: drink,
+                      )));
         }),
       ]));
     }

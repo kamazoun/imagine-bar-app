@@ -13,8 +13,6 @@ class ItemListing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FoodController foodController = Get.find<FoodController>();
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(

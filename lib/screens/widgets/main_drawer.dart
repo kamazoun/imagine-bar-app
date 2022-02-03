@@ -4,6 +4,9 @@ import 'package:imagine_bar/screens/create_condiment.dart';
 import 'package:imagine_bar/screens/create_drink.dart';
 import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_waiter.dart';
+import 'package:imagine_bar/screens/edit_drinks.dart';
+
+import '../summary.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
@@ -52,10 +55,16 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text('Edit Drink'),
+            onTap: () {
+              Get.to(() => EditDrink());
+            },
+          ),
+          ListTile(
             title: Text('Summary'),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => null /*Summary()*/));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => Summary()));
             },
           ),
         ],

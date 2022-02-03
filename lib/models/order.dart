@@ -27,8 +27,8 @@ class Order {
             waiterName: json['waiterName'] as String,
             total: json['total'],
             at: DateTime.fromMillisecondsSinceEpoch(json['at']),
-            foodItems: json['foodItems'] as Map<String, dynamic>,
-            drinkItems: json['drinkItems'] as Map<String, dynamic>,
+            foodItems: transform(json['foodItems']),
+            drinkItems: transform(json['drinkItems']),
             served: json['served'],
             paid: json['paid']);
 
@@ -65,5 +65,13 @@ class Order {
         drinkItems: drinkItems ?? this.drinkItems,
         served: served ?? this.served,
         paid: paid ?? this.paid);
+  }
+
+  static Map<String, int> transform(Map<String, dynamic> entry) {
+    final Map<String, int> r = {};
+    entry.forEach((key, value) {
+      r[key] = value;
+    });
+    return r;
   }
 }

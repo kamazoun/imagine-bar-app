@@ -44,4 +44,8 @@ class DrinkFirestore {
 
     return drink;
   }
+
+  static void updateDrink(Drink drink) async {
+    await _drinksRef.doc(drink.id).update(drink.toJson());
+  }
 }

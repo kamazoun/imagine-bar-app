@@ -45,6 +45,18 @@ class OrderFirestore {
   }
 
   static Stream<QuerySnapshot<Order>> getAllOrdersStream() {
-    return _ordersRef.get().asStream();
+    return _ordersRef.orderBy('at', descending: true).get().asStream();
+  }
+
+  static Future<List<Order>> getDateOrders(DateTime orderSummaryDate) async {
+    List<QueryDocumentSnapshot<Object>> orders = await _ordersRef
+        .where('at',
+            isGreaterThan: orderSummaryDate.millisecondsSinceEpoch,
+            isLessThan:
+                orderSummaryDate.add(Duration(days: 1)).millisecondsSinceEpoch)
+        .get()
+        .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
+
+    return orders.map((QueryDocumentSnapshot e) => e.data() as Order).toList();
   }
 }
