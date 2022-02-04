@@ -4,7 +4,8 @@ import 'package:imagine_bar/screens/create_condiment.dart';
 import 'package:imagine_bar/screens/create_drink.dart';
 import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_waiter.dart';
-import 'package:imagine_bar/screens/edit_drinks.dart';
+import 'package:imagine_bar/screens/edit_drink.dart';
+import 'package:imagine_bar/screens/item_listing.dart';
 
 import '../summary.dart';
 
@@ -19,14 +20,23 @@ class MainDrawer extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Text(
-              'Imagine Bar',
-              style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontSize: 30,
-                  color: Colors.white),
+            child: Center(
+              child: Text(
+                'Imagine Bar',
+                style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 30,
+                    color: Colors.white),
+              ),
             ),
             decoration: BoxDecoration(color: Colors.blue),
+          ),
+          ListTile(
+            title: Text('Inventory'),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => ItemListing()));
+            },
           ),
           ListTile(
             title: Text('Add Drink to Inventory'),

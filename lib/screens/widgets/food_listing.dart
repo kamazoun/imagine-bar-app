@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/models/condiment.dart';
 import 'package:imagine_bar/models/food.dart';
+import 'package:imagine_bar/screens/edit_food.dart';
 
 class FoodListing extends StatelessWidget {
   @override
@@ -43,7 +44,7 @@ class FoodListing extends StatelessWidget {
         )),
         DataCell(Text('¢${food.cost}'), showEditIcon: true, onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => null));
+              context, MaterialPageRoute(builder: (context) => EditFood()));
         }),
       ]));
     }

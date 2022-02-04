@@ -5,6 +5,7 @@ import 'package:imagine_bar/controllers/employee_controller.dart';
 import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
 import 'package:imagine_bar/screens/item_listing.dart';
+import 'package:imagine_bar/screens/orders.dart';
 
 import 'controllers/auth.dart';
 import 'firebase_options.dart';
@@ -34,6 +35,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ItemListing());
+        home: Orders());
   }
 }

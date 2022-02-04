@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/models/drink.dart';
-import 'package:imagine_bar/screens/edit_drinks.dart';
+import 'package:imagine_bar/screens/edit_drink.dart';
 
 class DrinkListing extends StatelessWidget {
   @override

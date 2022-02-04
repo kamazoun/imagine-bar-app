@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
 import 'package:imagine_bar/models/order.dart';
+import 'package:imagine_bar/screens/widgets/main_drawer.dart';
 import 'package:imagine_bar/screens/widgets/order_drinks_column.dart';
 import 'package:imagine_bar/screens/widgets/order_foods_column.dart';
 
@@ -23,6 +24,7 @@ class _OrdersState extends State<Orders> {
     final OrderController orderController = Get.find<OrderController>();
 
     return Scaffold(
+      drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Orders'),
         actions: [
@@ -133,6 +135,7 @@ class OrderListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 OrderDrinksColumn(order: order),
+                VerticalDivider(width: 10),
                 OrderFoodsColumn(order: order),
               ],
             ),
