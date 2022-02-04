@@ -95,8 +95,8 @@ class CreateFood extends StatelessWidget {
       return;
     }
 
-    for (var condiment in foodController.condiments) {
-      if (condiment.name == nameController.text.trim()) {
+    for (var food in foodController.foods) {
+      if (food.name == nameController.text.trim()) {
         return;
       }
     }

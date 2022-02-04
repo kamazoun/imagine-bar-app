@@ -108,4 +108,12 @@ class FoodController extends GetxController {
     _drinks.add(drink);
     update();
   }
+
+  void updateFood(Food food) {
+    FoodFirestore.updateFood(food);
+
+    _foods.removeWhere((element) => element.id == food.id);
+    _foods.add(food);
+    update();
+  }
 }

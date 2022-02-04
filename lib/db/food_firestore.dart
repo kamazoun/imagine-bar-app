@@ -45,4 +45,8 @@ class FoodFirestore {
 
     return food;
   }
+
+  static void updateFood(Food food) async {
+    await _foodsRef.doc(food.id).update(food.toJson());
+  }
 }
