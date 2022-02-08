@@ -13,65 +13,50 @@ class ItemListing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FoodController foodController = Get.find<FoodController>();
-    return RefreshIndicator(
-      onRefresh: () async {
-        await foodController.setAllDrinks();
-        await foodController.setAllCondiments();
-        await foodController.setAllFoods();
-      },
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-            drawer: MainDrawer(),
-            appBar: AppBar(
-              title: Text('Imagine Bar'),
-              centerTitle: true,
-              bottom: const TabBar(
-                tabs: [
-                  Tab(icon: Icon(Icons.no_drinks_outlined)),
-                  Tab(icon: Icon(Icons.restaurant_menu)),
-                ],
-              ),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Get.to(() => Orders());
-                    },
-                    icon: Icon(Icons.file_copy))
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          //drawer: MainDrawer(),
+          appBar: AppBar(
+            title: Text('Imagine Bar'),
+            centerTitle: true,
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.no_drinks_outlined)),
+                Tab(icon: Icon(Icons.restaurant_menu)),
               ],
             ),
-            body: TabBarView(
-              children: [
-                Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 25),
-                          child: Text('Drinks')),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: DrinkListing(),
-                    ),
-                  ],
-                ),
-                Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Text('Foods'),
-                    ),
-                    Flexible(flex: 7, child: FoodListing())
-                  ],
-                ),
-              ],
-            )),
-      ),
+          ),
+          body: TabBarView(
+            children: [
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 25),
+                        child: Text('Drinks')),
+                  ),
+                  Flexible(
+                    flex: 7,
+                    child: DrinkListing(),
+                  ),
+                ],
+              ),
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Text('Foods'),
+                  ),
+                  Flexible(flex: 7, child: FoodListing())
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

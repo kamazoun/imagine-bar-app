@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "image-restaurant-bar"
+  },
+  "targets": {
+    "image-restaurant-bar": {
+      "hosting": {
+        "admin": [
+          "imagineadminside"
+        ]
+      }
+    }
+  }
+}

@@ -59,4 +59,21 @@ class OrderFirestore {
 
     return orders.map((QueryDocumentSnapshot e) => e.data() as Order).toList();
   }
+
+  static Future<List<Order>> getRangeOrders(
+      DateTime orderSummaryDate, DateTime orderStatDate) async {
+    List<QueryDocumentSnapshot<Object>> orders = await _ordersRef
+        .where('at',
+            isGreaterThan: orderSummaryDate.millisecondsSinceEpoch,
+            isLessThan:
+                orderStatDate.add(Duration(days: 1)).millisecondsSinceEpoch)
+        .get()
+        .then((QuerySnapshot<Object> snapshot) => snapshot.docs);
+
+    return orders.map((QueryDocumentSnapshot e) => e.data() as Order).toList();
+  }
+
+  static Future updateOrder(Order order) async {
+    await _ordersRef.doc(order.id).update(order.toJson());
+  }
 }

@@ -34,6 +34,10 @@ class _EditFoodState extends State<EditFood> {
   @override
   Widget build(BuildContext context) {
     final FoodController foodController = Get.find<FoodController>();
+    if (food != null) {
+      foodController.setSelectedFoodCategory(food.category);
+      foodController.assignPortions(food.portions);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Update ${food?.name ?? 'food'}'),
@@ -66,6 +70,7 @@ class _EditFoodState extends State<EditFood> {
                           nameController.text = food.name;
                           priceController.text = food.cost.toString();
                           foodController.setSelectedFoodCategory(food.category);
+                          foodController.assignPortions(food.portions);
                         }
                       });
                     },

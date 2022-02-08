@@ -13,6 +13,8 @@ class OrderController extends GetxController {
 
   DateTime orderSummaryDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime orderStatDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   OrderController() {
     setAllOrders();
@@ -35,7 +37,18 @@ class OrderController extends GetxController {
   }
 
   void setSelectedSummaryDate(DateTime r) {
+    if (r.isAfter(orderStatDate)) {
+      return;
+    }
     orderSummaryDate = r;
+    update();
+  }
+
+  void setSelectedStatDate(DateTime r) {
+    if (r.isBefore(orderSummaryDate)) {
+      return;
+    }
+    orderStatDate = r;
     update();
   }
 
@@ -48,8 +61,18 @@ class OrderController extends GetxController {
         .toList();
   }
 
-  Map<Drink, int> getEachDrinksSold() {
-    List<Order> orders = getSelectedDayOrders();
+  List<Order> getSelectedRangeOrders() {
+    final first = orderSummaryDate;
+    final second = orderStatDate.add(Duration(days: 1));
+    return orders
+        .where((element) =>
+            element.at.isAfter(first) && element.at.isBefore(second))
+        .toList();
+  }
+
+  Map<Drink, int> getEachDrinksSold({isRange: false}) {
+    List<Order> orders =
+        isRange ? getSelectedRangeOrders() : getSelectedDayOrders();
     final FoodController foodController = Get.find<FoodController>();
 
     Map<Drink, int> r = {};
@@ -67,8 +90,9 @@ class OrderController extends GetxController {
     return r;
   }
 
-  Map<Food, int> getEachFoodsSold() {
-    List<Order> orders = getSelectedDayOrders();
+  Map<Food, int> getEachFoodsSold({isRange: false}) {
+    List<Order> orders =
+        isRange ? getSelectedRangeOrders() : getSelectedDayOrders();
     final FoodController foodController = Get.find<FoodController>();
 
     Map<Food, int> r = {};
@@ -86,8 +110,9 @@ class OrderController extends GetxController {
     return r;
   }
 
-  double getTotalAmountSold() {
-    List<Order> orders = getSelectedDayOrders();
+  double getTotalAmountSold({isRange: false}) {
+    List<Order> orders =
+        isRange ? getSelectedRangeOrders() : getSelectedDayOrders();
     double s = 0.0;
     for (Order order in orders) {
       s += order.total;
@@ -96,8 +121,9 @@ class OrderController extends GetxController {
     return s;
   }
 
-  List<int> getTotalQuantityOfDrinksFoodsSold() {
-    List<Order> orders = getSelectedDayOrders();
+  List<int> getTotalQuantityOfDrinksFoodsSold({isRange: false}) {
+    List<Order> orders =
+        isRange ? getSelectedRangeOrders() : getSelectedDayOrders();
     int d = 0;
     int f = 0;
     for (Order order in orders) {
@@ -113,5 +139,20 @@ class OrderController extends GetxController {
         await OrderFirestore.getDateOrders(orderSummaryDate);
 
     return dateOrder;
+  }
+
+  Future<List<Order>> getRangeOrders() async {
+    List<Order> dateOrder =
+        await OrderFirestore.getRangeOrders(orderSummaryDate, orderStatDate);
+
+    return dateOrder;
+  }
+
+  Future<void> updateOrder(Order order) async {
+    await OrderFirestore.updateOrder(order);
+
+    _orders.removeWhere((element) => element.id == order.id);
+    _orders.add(order);
+    update();
   }
 }

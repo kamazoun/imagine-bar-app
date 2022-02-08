@@ -84,6 +84,11 @@ class FoodController extends GetxController {
     update();
   }
 
+  void assignPortions(newPortions) {
+    portions = newPortions;
+    update();
+  }
+
   void increasePortions(Condiment val) {
     if (portions.containsKey(val)) {
       portions[val] += 1;

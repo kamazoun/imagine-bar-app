@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:imagine_bar/controllers/food_controller.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
 import 'package:imagine_bar/models/order.dart';
+import 'package:imagine_bar/screens/item_listing.dart';
 import 'package:imagine_bar/screens/widgets/main_drawer.dart';
 import 'package:imagine_bar/screens/widgets/order_drinks_column.dart';
 import 'package:imagine_bar/screens/widgets/order_foods_column.dart';
@@ -30,6 +31,11 @@ class _OrdersState extends State<Orders> {
         actions: [
           IconButton(
               onPressed: () {
+                Get.to(() => ItemListing());
+              },
+              icon: const Icon(Icons.inventory)),
+          IconButton(
+              onPressed: () {
                 setState(() {
                   isTable = !isTable;
                 });
@@ -37,43 +43,64 @@ class _OrdersState extends State<Orders> {
               icon: const Icon(Icons.change_circle))
         ],
       ),
-      body: StreamBuilder<QuerySnapshot<Order>>(
-        stream: orderController.ordersStream(),
-        builder: (_, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-          if (streamSnapshot.connectionState == ConnectionState.none ||
-              streamSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          final QuerySnapshot querySnapshot = streamSnapshot.data;
-          return isTable
-              ? ListView.separated(
-                  itemBuilder: (_, index) {
-                    return OrderListItem(
-                      order: querySnapshot.docs[index].data(),
-                    );
-                  },
-                  itemCount: querySnapshot.docs.length,
-                  separatorBuilder: (_, __) => const SizedBox(
-                    height: 1,
-                  ),
-                )
-              : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SingleChildScrollView(
-                    child: DataTable(
-                      columns: [
-                        DataColumn(label: Text('Waiter Name')),
-                        DataColumn(label: Text('Drink Orders')),
-                        DataColumn(label: Text('Food Orders')),
-                        DataColumn(label: Text('Total')),
-                        DataColumn(label: Text('Status')),
-                        DataColumn(label: Text('Date')),
-                      ],
-                      rows: _buildDataRows(context, querySnapshot.docs),
+      body: GetBuilder<OrderController>(
+        builder: (orderController) => StreamBuilder<QuerySnapshot<Order>>(
+          stream: orderController.ordersStream(),
+          builder: (_, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+            if (streamSnapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final QuerySnapshot querySnapshot = streamSnapshot.data;
+            return isTable
+                ? Padding(
+                    padding: kIsWeb
+                        ? EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: Get.width / 15)
+                        : const EdgeInsets.all(1.0),
+                    child: Container(
+                      margin: kIsWeb
+                          ? const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 15)
+                          : const EdgeInsets.all(1.0),
+                      child: ListView.separated(
+                        itemBuilder: (_, index) {
+                          return OrderListItem(
+                            order: querySnapshot.docs[index].data(),
+                          );
+                        },
+                        itemCount: querySnapshot.docs.length,
+                        separatorBuilder: (_, __) => const SizedBox(
+                          height: 1,
+                        ),
+                      ),
                     ),
-                  ),
-                );
-        },
+                  )
+                : Padding(
+                    padding: kIsWeb
+                        ? const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 30)
+                        : const EdgeInsets.all(1.0),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: SingleChildScrollView(
+                          child: DataTable(
+                            columns: [
+                              DataColumn(label: Text('Waiter Name')),
+                              DataColumn(label: Text('Drink Orders')),
+                              DataColumn(label: Text('Food Orders')),
+                              DataColumn(label: Text('Total')),
+                              DataColumn(label: Text('Status')),
+                              DataColumn(label: Text('Date')),
+                            ],
+                            rows: _buildDataRows(context, querySnapshot.docs),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+          },
+        ),
       ),
     );
   }
@@ -91,7 +118,29 @@ class _OrdersState extends State<Orders> {
           OrderFoodsColumn(order: order),
         ),
         DataCell(Text('¢${order.total}')),
-        DataCell(Text('${order.served ? 'Served' : 'Not served'}')),
+        DataCell(PopupMenuButton(
+          onSelected: (String val) {
+            Order newItem;
+            if (val == 'Paid') {
+              newItem = order.copyWith(paid: true, served: true);
+            } else if (val == 'Served') {
+              newItem = order.copyWith(paid: false, served: true);
+            } else {
+              newItem = order.copyWith(paid: false, served: false);
+            }
+            final OrderController orderController = Get.find<OrderController>();
+
+            orderController.updateOrder(newItem);
+          },
+          itemBuilder: (_) => ['Paid', 'Served', 'Not Served']
+              .map((e) => PopupMenuItem(
+                    child: Text(e),
+                    value: e,
+                  ))
+              .toList(),
+          child: Text(
+              '${order.paid ? 'Paid' : order.served ? 'Served' : 'Not served'}'),
+        )),
         DataCell(Text('${order.at.toLocal()}')),
       ]));
     }
@@ -109,7 +158,19 @@ class OrderListItem extends StatelessWidget {
     return Dismissible(
       key: ValueKey(order.id),
       direction: DismissDirection.endToStart,
-      onDismissed: (_) {},
+      onDismissed: (_) {
+        final OrderController orderController = Get.find<OrderController>();
+
+        if (!order.served) {
+          final newItem = order.copyWith(served: true);
+
+          orderController.updateOrder(newItem);
+        } else if (!order.paid) {
+          final newItem = order.copyWith(paid: true);
+
+          orderController.updateOrder(newItem);
+        }
+      },
       child: Card(
         elevation: 0.1,
         child: ListTile(
@@ -127,8 +188,9 @@ class OrderListItem extends StatelessWidget {
             ),
           ),
           trailing: TextButton(
-              onPressed: null,
-              child: Text('${order.served ? 'Served' : 'Not served'}')),
+              onPressed: () {},
+              child: Text(
+                  '${order.paid ? 'Paid' : order.served ? 'Served' : 'Not served'}')),
           subtitle: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(

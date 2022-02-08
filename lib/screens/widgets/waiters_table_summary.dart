@@ -10,7 +10,7 @@ class WaitersTableSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderController orderController = Get.find<OrderController>();
     return FutureBuilder<List<Order>>(
-        future: orderController.getDateOrders(),
+        future: orderController.getRangeOrders(),
         builder: (_, AsyncSnapshot<List<Order>> futureSnapshot) {
           if (futureSnapshot.connectionState == ConnectionState.done) {
             return Flexible(

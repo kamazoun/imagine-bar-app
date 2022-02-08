@@ -5,7 +5,9 @@ import 'package:imagine_bar/screens/create_drink.dart';
 import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_waiter.dart';
 import 'package:imagine_bar/screens/edit_drink.dart';
+import 'package:imagine_bar/screens/edit_food.dart';
 import 'package:imagine_bar/screens/item_listing.dart';
+import 'package:imagine_bar/screens/stats.dart';
 
 import '../summary.dart';
 
@@ -30,13 +32,6 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             decoration: BoxDecoration(color: Colors.blue),
-          ),
-          ListTile(
-            title: Text('Inventory'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => ItemListing()));
-            },
           ),
           ListTile(
             title: Text('Add Drink to Inventory'),
@@ -71,10 +66,23 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text('Edit Food'),
+            onTap: () {
+              Get.to(() => EditFood());
+            },
+          ),
+          ListTile(
             title: Text('Summary'),
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => Summary()));
+            },
+          ),
+          ListTile(
+            title: Text('Stats'),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => Stats()));
             },
           ),
         ],
