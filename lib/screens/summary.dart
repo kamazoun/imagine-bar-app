@@ -38,7 +38,7 @@ class Summary extends StatelessWidget {
                   flex: 1,
                   child: SelectOrderSummaryDate(),
                 ),
-                WaitersTableSummary(),
+                WaitersTableSummary(false),
               ],
             ),
             Flex(
@@ -48,7 +48,7 @@ class Summary extends StatelessWidget {
                   flex: 1,
                   child: SelectOrderSummaryDate(),
                 ),
-                ItemsTableSummary(),
+                ItemsTableSummary(false),
               ],
             )
           ]),

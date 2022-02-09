@@ -9,11 +9,17 @@ import 'package:imagine_bar/models/food.dart';
 import 'package:imagine_bar/models/order.dart';
 
 class ItemsTableSummary extends StatelessWidget {
+  final bool isRange;
+
+  const ItemsTableSummary(this.isRange, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final OrderController orderController = Get.find<OrderController>();
     return FutureBuilder<List<Order>>(
-        future: orderController.getRangeOrders(),
+        future: isRange
+            ? orderController.getRangeOrders()
+            : orderController.getDateOrders(),
         builder: (_, AsyncSnapshot<List<Order>> futureSnapshot) {
           if (futureSnapshot.connectionState == ConnectionState.done) {
             return Flexible(

@@ -38,7 +38,7 @@ class Stats extends StatelessWidget {
                   flex: 1,
                   child: SelectRangeDate(),
                 ),
-                WaitersTableSummary(),
+                WaitersTableSummary(true),
               ],
             ),
             Flex(
@@ -48,7 +48,7 @@ class Stats extends StatelessWidget {
                   flex: 1,
                   child: SelectRangeDate(),
                 ),
-                ItemsTableSummary(),
+                ItemsTableSummary(true),
               ],
             )
           ]),

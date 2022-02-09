@@ -6,11 +6,16 @@ import 'package:imagine_bar/screens/widgets/order_drinks_column.dart';
 import 'package:imagine_bar/screens/widgets/order_foods_column.dart';
 
 class WaitersTableSummary extends StatelessWidget {
+  final bool isRange;
+
+  const WaitersTableSummary(this.isRange, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final OrderController orderController = Get.find<OrderController>();
     return FutureBuilder<List<Order>>(
-        future: orderController.getRangeOrders(),
+        future: isRange
+            ? orderController.getRangeOrders()
+            : orderController.getDateOrders(),
         builder: (_, AsyncSnapshot<List<Order>> futureSnapshot) {
           if (futureSnapshot.connectionState == ConnectionState.done) {
             return Flexible(
