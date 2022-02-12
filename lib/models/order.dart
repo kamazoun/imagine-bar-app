@@ -25,7 +25,7 @@ class Order {
             id: id,
             waiterId: json['waiterId'] as String,
             waiterName: json['waiterName'] as String,
-            total: json['total'],
+            total: double.tryParse(json['total'].toString()) ?? json['total'],
             at: DateTime.fromMillisecondsSinceEpoch(json['at']),
             foodItems: transform(json['foodItems']),
             drinkItems: transform(json['drinkItems']),

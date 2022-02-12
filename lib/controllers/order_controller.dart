@@ -33,7 +33,14 @@ class OrderController extends GetxController {
   }
 
   Stream<QuerySnapshot<Order>> ordersStream() {
-    return OrderFirestore.getAllOrdersStream();
+    final stream = OrderFirestore.getAllOrdersStream();
+    return stream;
+
+    stream.listen((event) {
+      if (event.docChanges.isNotEmpty) {
+        update();
+      }
+    });
   }
 
   void setSelectedSummaryDate(DateTime r) {

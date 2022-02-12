@@ -85,6 +85,13 @@ class MainDrawer extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (ctx) => Stats()));
             },
           ),
+          ListTile(
+            title: Text('Refresh all controllers - for offline'),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => Stats()));
+            },
+          ),
         ],
       ),
     );
