@@ -19,6 +19,29 @@ class ItemListing extends StatelessWidget {
           //drawer: MainDrawer(),
           appBar: AppBar(
             title: Text('Imagine Bar'),
+            actions: [
+              GetBuilder<FoodController>(
+                builder: (foodController) => Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.white),
+                  width: Get.width / 6,
+                  height: 25,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search',
+                        labelText: 'Search',
+                        prefixIcon: Icon(Icons.search)),
+                    onChanged: (value) {
+                      foodController.setSearchedDrinks(value: value);
+                    },
+                  ),
+                ),
+              )
+            ],
             centerTitle: true,
             bottom: const TabBar(
               tabs: [

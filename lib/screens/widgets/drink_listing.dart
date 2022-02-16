@@ -39,7 +39,7 @@ class DrinkListing extends StatelessWidget {
   }
 
   List<DataRow> buildDataRows(context, FoodController foodController) {
-    List<Drink> drinks = foodController.drinks;
+    List<Drink> drinks = foodController.searchedDrinks;
     final List<DataRow> r = [];
     for (var drink in drinks) {
       r.add(DataRow(cells: [

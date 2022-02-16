@@ -45,6 +45,9 @@ class WaitersTableSummary extends StatelessWidget {
                       DataColumn(
                           label: Text('last order at',
                               overflow: TextOverflow.ellipsis)),
+                      DataColumn(
+                          label:
+                              Text('Action', overflow: TextOverflow.ellipsis)),
                     ],
                     rows: _buildWaiterDataRows(context, futureSnapshot.data),
                   ),
@@ -58,8 +61,10 @@ class WaitersTableSummary extends StatelessWidget {
 
   List<DataRow> _buildWaiterDataRows(context, List<Order> orders) {
     final List<DataRow> r = [];
+    final concatenated = Order.concatenateOrders(orders).values.toList()
+      ..sort((o1, o2) => o2.at.compareTo(o1.at));
 
-    for (Order order in Order.concatenateOrders(orders).values) {
+    for (Order order in concatenated) {
       r.add(DataRow(cells: [
         DataCell(Text(order.waiterName)),
         DataCell(OrderDrinksColumn(
@@ -70,9 +75,21 @@ class WaitersTableSummary extends StatelessWidget {
         )),
         DataCell(Text('¢${order.total}')),
         DataCell(Text('${order.at.toLocal()}')),
+        DataCell(order.paid
+            ? Text('Account Closed')
+            : ElevatedButton.icon(
+                onPressed: () => _closeWaiterAccount(order.waiterId),
+                icon: Icon(Icons.paid),
+                label: Text('Pay'))),
       ]));
     }
 
     return r;
   }
+}
+
+_closeWaiterAccount(String waiterId) {
+  final OrderController orderController = Get.find<OrderController>();
+
+  orderController.closeWaiterOrders(waiterId);
 }

@@ -9,10 +9,12 @@ import 'package:imagine_bar/models/food.dart';
 
 class FoodController extends GetxController {
   RxList<Drink> _drinks = RxList<Drink>([]);
+  final RxList<Drink> _searchedDrinks = RxList<Drink>([]);
   RxList<Condiment> _condiments = RxList<Condiment>([]);
   RxList<Food> _foods = RxList<Food>([]);
 
   List<Drink> get drinks => _drinks;
+  List<Drink> get searchedDrinks => _searchedDrinks;
   List<Condiment> get condiments => _condiments;
   List<Food> get foods => _foods;
 
@@ -29,6 +31,7 @@ class FoodController extends GetxController {
   setAllDrinks() async {
     final d = await DrinkFirestore.getAllDrinks();
     _drinks.assignAll(d);
+    _searchedDrinks.assignAll(d);
   }
 
   setAllCondiments() async {
@@ -119,6 +122,19 @@ class FoodController extends GetxController {
 
     _foods.removeWhere((element) => element.id == food.id);
     _foods.add(food);
+    update();
+  }
+
+  void setSearchedDrinks({String value}) {
+    if (null == value || value.isEmpty) {
+      _searchedDrinks.assignAll(drinks);
+      update();
+      return;
+    }
+    _searchedDrinks.assignAll(drinks
+        .where((element) =>
+            element.name.toLowerCase().contains(value.trim().toLowerCase()))
+        .toList());
     update();
   }
 }

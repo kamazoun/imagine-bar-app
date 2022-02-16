@@ -45,7 +45,11 @@ class OrderFirestore {
   }
 
   static Stream<QuerySnapshot<Order>> getAllOrdersStream() {
-    return _ordersRef.orderBy('at', descending: true).get().asStream();
+    return _ordersRef
+        .orderBy('at', descending: true)
+        .limit(25)
+        .get()
+        .asStream();
   }
 
   static Future<List<Order>> getDateOrders(DateTime orderSummaryDate) async {
@@ -79,5 +83,9 @@ class OrderFirestore {
 
   static Future cancelOrder(Order order) async {
     await _ordersRef.doc(order.id).delete();
+  }
+
+  static Future payOrders(Order order) async {
+    await _ordersRef.doc(order.id).update({'paid': true});
   }
 }

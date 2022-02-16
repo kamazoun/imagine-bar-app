@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
 import 'package:imagine_bar/models/order.dart';
+import 'package:imagine_bar/screens/cancel_order.dart';
 import 'package:imagine_bar/screens/item_listing.dart';
 import 'package:imagine_bar/screens/widgets/main_drawer.dart';
 import 'package:imagine_bar/screens/widgets/order_drinks_column.dart';
@@ -59,6 +60,7 @@ class _OrdersState extends State<Orders> {
                         DataColumn(label: Text('Total')),
                         DataColumn(label: Text('Status')),
                         DataColumn(label: Text('Date')),
+                        DataColumn(label: Text('Actions')),
                       ],
                       rows: _buildDataRows(context, querySnapshot.docs),
                     ),
@@ -108,7 +110,16 @@ class _OrdersState extends State<Orders> {
           child: Text(
               '${order.paid ? 'Paid' : order.served ? 'Served' : 'Not served'}'),
         )),
-        DataCell(Text('${order.at.toLocal()}')),
+        DataCell(Text('${order.at.toLocal().toString().substring(0, 16)}')),
+        DataCell(TextButton.icon(
+            onPressed: () {
+              Get.to(() => CancelOrder());
+            },
+            icon: Icon(
+              Icons.cancel,
+              color: Colors.red,
+            ),
+            label: Text('Cancel the order'))),
       ]));
     }
     return r;

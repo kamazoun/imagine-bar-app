@@ -58,7 +58,7 @@ class GraphicalStats extends StatelessWidget {
             ),
             const Divider(),
             Text(
-                'Different drinks sold: ${orderController.getEachDrinksSold(isRange: true).length}'),
+                'Different types of drinks sold: ${orderController.getEachDrinksSold(isRange: true).length}'),
             SizedBox(
               width: kIsWeb ? Get.width / 2 : Get.width - 10,
               height: kIsWeb ? Get.width / 2 : Get.width - 10,

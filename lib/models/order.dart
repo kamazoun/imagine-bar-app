@@ -83,14 +83,16 @@ class Order {
     for (Order order in orders) {
       if (concatenatedOrders.keys.contains(order.waiterId)) {
         final t = concatenatedOrders[order.waiterId].total;
-        final t2 = concatenatedOrders[order.waiterId].at;
+        final a = concatenatedOrders[order.waiterId].at;
+        final s = concatenatedOrders[order.waiterId].served;
+        final p = concatenatedOrders[order.waiterId].paid;
         concatenatedOrders[order.waiterId] = concatenatedOrders[order.waiterId]
             .copyWith(
                 total: t + order.total,
                 at: DateTime.fromMillisecondsSinceEpoch(max(
-                    t2.millisecondsSinceEpoch,
-                    order.at.millisecondsSinceEpoch)),
-                served: true);
+                    a.millisecondsSinceEpoch, order.at.millisecondsSinceEpoch)),
+                served: s && order.served,
+                paid: p && order.paid);
 
         order.foodItems.forEach((key, value) {
           if (concatenatedOrders[order.waiterId].foodItems.keys.contains(key)) {
