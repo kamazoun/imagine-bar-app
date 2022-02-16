@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
@@ -24,6 +26,7 @@ class WaitersTableSummary extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
+                    dataRowHeight: kMinInteractiveDimension * 3,
                     sortColumnIndex: 1,
                     sortAscending: false,
                     headingTextStyle: TextStyle(
@@ -40,7 +43,8 @@ class WaitersTableSummary extends StatelessWidget {
                           label:
                               Text('total', overflow: TextOverflow.ellipsis)),
                       DataColumn(
-                          label: Text('time', overflow: TextOverflow.ellipsis)),
+                          label: Text('last order at',
+                              overflow: TextOverflow.ellipsis)),
                     ],
                     rows: _buildWaiterDataRows(context, futureSnapshot.data),
                   ),
@@ -55,7 +59,7 @@ class WaitersTableSummary extends StatelessWidget {
   List<DataRow> _buildWaiterDataRows(context, List<Order> orders) {
     final List<DataRow> r = [];
 
-    for (Order order in orders) {
+    for (Order order in Order.concatenateOrders(orders).values) {
       r.add(DataRow(cells: [
         DataCell(Text(order.waiterName)),
         DataCell(OrderDrinksColumn(

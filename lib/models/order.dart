@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Order {
   final String id;
   final String waiterId;
@@ -73,5 +75,42 @@ class Order {
       r[key] = value;
     });
     return r;
+  }
+
+  static Map<String, Order> concatenateOrders(List<Order> orders) {
+    Map<String, Order> concatenatedOrders = {};
+
+    for (Order order in orders) {
+      if (concatenatedOrders.keys.contains(order.waiterId)) {
+        final t = concatenatedOrders[order.waiterId].total;
+        final t2 = concatenatedOrders[order.waiterId].at;
+        concatenatedOrders[order.waiterId] = concatenatedOrders[order.waiterId]
+            .copyWith(
+                total: t + order.total,
+                at: DateTime.fromMillisecondsSinceEpoch(max(
+                    t2.millisecondsSinceEpoch,
+                    order.at.millisecondsSinceEpoch)),
+                served: true);
+
+        order.foodItems.forEach((key, value) {
+          if (concatenatedOrders[order.waiterId].foodItems.keys.contains(key)) {
+            concatenatedOrders[order.waiterId].foodItems[key] += value;
+          } else {
+            concatenatedOrders[order.waiterId].foodItems.addAll({key: value});
+          }
+        });
+
+        order.drinkItems.forEach((key, value) {
+          if (concatenatedOrders[order.waiterId].drinkItems.containsKey(key)) {
+            concatenatedOrders[order.waiterId].drinkItems[key] += value;
+          } else {
+            concatenatedOrders[order.waiterId].drinkItems.addAll({key: value});
+          }
+        });
+      } else {
+        concatenatedOrders[order.waiterId] = order;
+      }
+    }
+    return concatenatedOrders;
   }
 }

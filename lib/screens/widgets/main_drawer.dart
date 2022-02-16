@@ -6,7 +6,6 @@ import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_waiter.dart';
 import 'package:imagine_bar/screens/edit_drink.dart';
 import 'package:imagine_bar/screens/edit_food.dart';
-import 'package:imagine_bar/screens/item_listing.dart';
 import 'package:imagine_bar/screens/stats.dart';
 
 import '../summary.dart';
@@ -80,13 +79,6 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Stats'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => Stats()));
-            },
-          ),
-          ListTile(
-            title: Text('Refresh all controllers - for offline'),
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => Stats()));

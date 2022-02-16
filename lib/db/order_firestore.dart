@@ -76,4 +76,8 @@ class OrderFirestore {
   static Future updateOrder(Order order) async {
     await _ordersRef.doc(order.id).update(order.toJson());
   }
+
+  static Future cancelOrder(Order order) async {
+    await _ordersRef.doc(order.id).delete();
+  }
 }

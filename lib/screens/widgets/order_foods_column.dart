@@ -18,12 +18,14 @@ class OrderFoodsColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final FoodController foodController = Get.find<FoodController>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: order.foodItems.keys
-          .map((key) => Text(
-              '${order.foodItems[key]} ${foodController.foods.firstWhereOrNull((element) => element.id == key)?.name ?? ''}'))
-          .toList(),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: order.foodItems.keys
+            .map((key) => Text(
+                '${order.foodItems[key]} ${foodController.foods.firstWhereOrNull((element) => element.id == key)?.name ?? ''}'))
+            .toList(),
+      ),
     );
   }
 }

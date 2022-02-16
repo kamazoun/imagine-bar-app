@@ -18,8 +18,6 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  bool isTable = false;
-
   @override
   Widget build(BuildContext context) {
     final OrderController orderController = Get.find<OrderController>();
@@ -34,13 +32,6 @@ class _OrdersState extends State<Orders> {
                 Get.to(() => ItemListing());
               },
               icon: const Icon(Icons.inventory)),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  isTable = !isTable;
-                });
-              },
-              icon: const Icon(Icons.change_circle))
         ],
       ),
       body: GetBuilder<OrderController>(
@@ -51,54 +42,30 @@ class _OrdersState extends State<Orders> {
               return Center(child: CircularProgressIndicator());
             }
             final QuerySnapshot querySnapshot = streamSnapshot.data;
-            return isTable
-                ? Padding(
-                    padding: kIsWeb
-                        ? EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: Get.width / 15)
-                        : const EdgeInsets.all(1.0),
-                    child: Container(
-                      margin: kIsWeb
-                          ? const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 15)
-                          : const EdgeInsets.all(1.0),
-                      child: ListView.separated(
-                        itemBuilder: (_, index) {
-                          return OrderListItem(
-                            order: querySnapshot.docs[index].data(),
-                          );
-                        },
-                        itemCount: querySnapshot.docs.length,
-                        separatorBuilder: (_, __) => const SizedBox(
-                          height: 1,
-                        ),
-                      ),
+            return Padding(
+              padding: kIsWeb
+                  ? const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30)
+                  : const EdgeInsets.all(1.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SingleChildScrollView(
+                    child: DataTable(
+                      dataRowHeight: kMinInteractiveDimension * 1.5,
+                      columns: [
+                        DataColumn(label: Text('Waiter Name')),
+                        DataColumn(label: Text('Drink Orders')),
+                        DataColumn(label: Text('Food Orders')),
+                        DataColumn(label: Text('Total')),
+                        DataColumn(label: Text('Status')),
+                        DataColumn(label: Text('Date')),
+                      ],
+                      rows: _buildDataRows(context, querySnapshot.docs),
                     ),
-                  )
-                : Padding(
-                    padding: kIsWeb
-                        ? const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 30)
-                        : const EdgeInsets.all(1.0),
-                    child: Center(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: SingleChildScrollView(
-                          child: DataTable(
-                            columns: [
-                              DataColumn(label: Text('Waiter Name')),
-                              DataColumn(label: Text('Drink Orders')),
-                              DataColumn(label: Text('Food Orders')),
-                              DataColumn(label: Text('Total')),
-                              DataColumn(label: Text('Status')),
-                              DataColumn(label: Text('Date')),
-                            ],
-                            rows: _buildDataRows(context, querySnapshot.docs),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  ),
+                ),
+              ),
+            );
           },
         ),
       ),
@@ -130,7 +97,7 @@ class _OrdersState extends State<Orders> {
             }
             final OrderController orderController = Get.find<OrderController>();
 
-            orderController.updateOrder(newItem);
+            orderController.updateOrderState(newItem);
           },
           itemBuilder: (_) => ['Paid', 'Served', 'Not Served']
               .map((e) => PopupMenuItem(
@@ -145,65 +112,5 @@ class _OrdersState extends State<Orders> {
       ]));
     }
     return r;
-  }
-}
-
-class OrderListItem extends StatelessWidget {
-  const OrderListItem({Key key, this.order}) : super(key: key);
-
-  final Order order;
-
-  @override
-  Widget build(BuildContext context) {
-    return Dismissible(
-      key: ValueKey(order.id),
-      direction: DismissDirection.endToStart,
-      onDismissed: (_) {
-        final OrderController orderController = Get.find<OrderController>();
-
-        if (!order.served) {
-          final newItem = order.copyWith(served: true);
-
-          orderController.updateOrder(newItem);
-        } else if (!order.paid) {
-          final newItem = order.copyWith(paid: true);
-
-          orderController.updateOrder(newItem);
-        }
-      },
-      child: Card(
-        elevation: 0.1,
-        child: ListTile(
-          onTap: null,
-          title: Center(child: Text(order.waiterName)),
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 14.0),
-            child: Text(
-              '¢${order.total}',
-              style: TextStyle(
-                fontSize: 15,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          trailing: TextButton(
-              onPressed: () {},
-              child: Text(
-                  '${order.paid ? 'Paid' : order.served ? 'Served' : 'Not served'}')),
-          subtitle: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                OrderDrinksColumn(order: order),
-                VerticalDivider(width: 10),
-                OrderFoodsColumn(order: order),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

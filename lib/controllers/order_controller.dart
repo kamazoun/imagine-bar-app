@@ -155,7 +155,15 @@ class OrderController extends GetxController {
     return dateOrder;
   }
 
-  Future<void> updateOrder(Order order) async {
+  Future<void> updateOrderState(Order order) async {
+    await OrderFirestore.updateOrder(order);
+
+    _orders.removeWhere((element) => element.id == order.id);
+    _orders.add(order);
+    update();
+  }
+
+  Future<void> cancelOrder(Order order) async {
     await OrderFirestore.updateOrder(order);
 
     _orders.removeWhere((element) => element.id == order.id);
