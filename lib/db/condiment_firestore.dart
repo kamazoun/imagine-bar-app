@@ -50,4 +50,8 @@ class CondimentFirestore {
   static void updateCondiment(Condiment condiment) async {
     await _condimentsRef.doc(condiment.id).update(condiment.toJson());
   }
+
+  static void increaseCondimentStock(String id, int quantity) {
+    _condimentsRef.doc(id).update({'stock': FieldValue.increment(quantity)});
+  }
 }

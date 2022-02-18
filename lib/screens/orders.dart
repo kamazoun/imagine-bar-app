@@ -113,7 +113,9 @@ class _OrdersState extends State<Orders> {
         DataCell(Text('${order.at.toLocal().toString().substring(0, 16)}')),
         DataCell(TextButton.icon(
             onPressed: () {
-              Get.to(() => CancelOrder());
+              Get.to(() => CancelOrder(
+                    order: order,
+                  ));
             },
             icon: Icon(
               Icons.cancel,

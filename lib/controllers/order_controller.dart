@@ -89,7 +89,11 @@ class OrderController extends GetxController {
         final Drink drink = foodController.drinks
             .firstWhereOrNull((element) => element.id == entry.key);
         if (null != drink) {
-          r.addAll({drink: entry.value});
+          if (r.keys.contains(drink)) {
+            r[drink] += entry.value;
+          } else {
+            r.addAll({drink: entry.value});
+          }
         }
       }
     }
@@ -109,7 +113,11 @@ class OrderController extends GetxController {
         final Food food = foodController.foods
             .firstWhereOrNull((element) => element.id == entry.key);
         if (null != food) {
-          r.addAll({food: entry.value});
+          if (r.keys.contains(food)) {
+            r[food] += entry.value;
+          } else {
+            r.addAll({food: entry.value});
+          }
         }
       }
     }
@@ -164,12 +172,47 @@ class OrderController extends GetxController {
     if (update) update();
   }
 
-  Future<void> cancelOrder(Order order) async {
-    await OrderFirestore.cancelOrder(order);
+  updateOrder(Order order) async {
+    await OrderFirestore.updateOrder(order);
 
     _orders.removeWhere((element) => element.id == order.id);
     _orders.add(order);
+
     update();
+  }
+
+  Future<void> cancelOrder(Order order, Map<String, int> drinkRemovals,
+      Map<String, int> foodRemovals) async {
+    final FoodController foodController = Get.find<FoodController>();
+
+    drinkRemovals.entries.forEach((element) {
+      order.drinkItems[element.key] -= element.value;
+      if (order.drinkItems[element.key] == 0) {
+        order.drinkItems.remove(element.key);
+      }
+      foodController.returnDrink(element.key, element.value);
+    });
+    foodRemovals.entries.forEach((element) {
+      order.foodItems[element.key] -= element.value;
+      if (order.foodItems[element.key] == 0) {
+        order.foodItems.remove(element.key);
+      }
+      final Food food =
+          foodController.foods.firstWhereOrNull((f) => f.id == element.key);
+      if (null != food) {
+        food.portions.entries.forEach((element) {
+          foodController.returnCondiment(element.key.id, element.value);
+        });
+      }
+    });
+
+    if (order.foodItems.isEmpty && order.drinkItems.isEmpty) {
+      await OrderFirestore.cancelOrder(order);
+      _orders.removeWhere((element) => element.id == order.id);
+      update();
+    } else {
+      updateOrder(order);
+    }
   }
 
   closeWaiterOrders(String waiterId) {

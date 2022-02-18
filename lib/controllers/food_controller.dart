@@ -145,4 +145,28 @@ class FoodController extends GetxController {
     _condiments.add(condiment);
     update();
   }
+
+  returnDrink(String id, int quantity) {
+    DrinkFirestore.increaseDrinkStock(id, quantity);
+    final drink = _drinks.firstWhereOrNull((p0) => p0.id == id);
+    if (null == drink) {
+      return;
+    }
+    drinks.remove(drink);
+    drinks.add(drink.copyWith(stock: drink.stock + quantity));
+
+    update();
+  }
+
+  returnCondiment(String id, int quantity) {
+    CondimentFirestore.increaseCondimentStock(id, quantity);
+    final condiment = _condiments.firstWhereOrNull((p0) => p0.id == id);
+    if (null == condiment) {
+      return;
+    }
+    condiments.remove(condiment);
+    condiments.add(condiment.copyWith(stock: condiment.stock + quantity));
+
+    update();
+  }
 }
