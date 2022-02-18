@@ -9,8 +9,18 @@ class CancelOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(),
-    );
+        appBar: AppBar(),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Text('Remove the individual items from your order'),
+            ),
+            SliverList(
+                delegate:
+                    SliverChildListDelegate.fixed(_buildOrderItems(order)))
+          ],
+        ));
   }
+
+  _buildOrderItems(Order order) {}
 }

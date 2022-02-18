@@ -46,4 +46,8 @@ class CondimentFirestore {
 
     return condiment;
   }
+
+  static void updateCondiment(Condiment condiment) async {
+    await _condimentsRef.doc(condiment.id).update(condiment.toJson());
+  }
 }

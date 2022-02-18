@@ -25,7 +25,7 @@ class Condiment {
     };
   }
 
-  Condiment copyWith({id, name, category, cost, time, stock}) {
+  Condiment copyWith({id, name, cost, time, stock}) {
     return Condiment(
       id: id ?? this.id,
       name: name ?? this.name,

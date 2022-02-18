@@ -37,6 +37,9 @@ class _EditDrinkState extends State<EditDrink> {
   Widget build(BuildContext context) {
     final FoodController foodController = Get.find<FoodController>();
 
+    if (drink != null) {
+      foodController.setSelectedDrinkCategory(drink.category);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Update ${drink?.name ?? 'drink'}'),

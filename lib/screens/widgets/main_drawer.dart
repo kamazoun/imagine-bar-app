@@ -4,6 +4,7 @@ import 'package:imagine_bar/screens/create_condiment.dart';
 import 'package:imagine_bar/screens/create_drink.dart';
 import 'package:imagine_bar/screens/create_food.dart';
 import 'package:imagine_bar/screens/create_waiter.dart';
+import 'package:imagine_bar/screens/edit_condiment.dart';
 import 'package:imagine_bar/screens/edit_drink.dart';
 import 'package:imagine_bar/screens/edit_food.dart';
 import 'package:imagine_bar/screens/stats.dart';
@@ -68,6 +69,12 @@ class MainDrawer extends StatelessWidget {
             title: Text('Edit Food'),
             onTap: () {
               Get.to(() => EditFood());
+            },
+          ),
+          ListTile(
+            title: Text('Edit Condiment'),
+            onTap: () {
+              Get.to(() => EditCondiment());
             },
           ),
           ListTile(

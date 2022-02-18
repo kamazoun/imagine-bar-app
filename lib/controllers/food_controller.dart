@@ -137,4 +137,12 @@ class FoodController extends GetxController {
         .toList());
     update();
   }
+
+  void updateCondiment(Condiment condiment) {
+    CondimentFirestore.updateCondiment(condiment);
+
+    _condiments.removeWhere((element) => element.id == condiment.id);
+    _condiments.add(condiment);
+    update();
+  }
 }
