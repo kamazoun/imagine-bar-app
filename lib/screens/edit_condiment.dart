@@ -19,6 +19,8 @@ class _EditCondimentState extends State<EditCondiment> {
 
   final TextEditingController priceController = TextEditingController();
 
+  final TextEditingController stockController = TextEditingController();
+
   Condiment condiment;
   @override
   void initState() {
@@ -27,6 +29,7 @@ class _EditCondimentState extends State<EditCondiment> {
     if (condiment != null) {
       nameController.text = condiment.name;
       priceController.text = condiment.cost.toString();
+      stockController.text = condiment.stock.toString();
     }
   }
 
@@ -40,7 +43,7 @@ class _EditCondimentState extends State<EditCondiment> {
         actions: [
           IconButton(
               icon: Icon(Icons.save),
-              onPressed: () => createItem(context, foodController))
+              onPressed: () => updateItem(context, foodController))
         ],
       ),
       body: GetBuilder<FoodController>(
@@ -64,6 +67,7 @@ class _EditCondimentState extends State<EditCondiment> {
                         if (condiment != null) {
                           nameController.text = condiment.name;
                           priceController.text = condiment.cost.toString();
+                          stockController.text = condiment.stock.toString();
                         }
                       });
                     },
@@ -82,12 +86,19 @@ class _EditCondimentState extends State<EditCondiment> {
                       labelText: 'Enter the price of the item',
                       prefixIcon: Icon(Icons.money)),
                 ),
+                TextField(
+                  keyboardType: TextInputType.numberWithOptions(),
+                  controller: stockController,
+                  decoration: InputDecoration(
+                    labelText: 'Enter the quantity in stock',
+                  ),
+                ),
                 const Divider(
                   indent: 25.0,
                   endIndent: 25.0,
                 ),
                 OutlinedButton(
-                    onPressed: () => createItem(context, foodController),
+                    onPressed: () => updateItem(context, foodController),
                     child: Text('Ok'))
               ],
             ),
@@ -97,13 +108,16 @@ class _EditCondimentState extends State<EditCondiment> {
     );
   }
 
-  createItem(context, FoodController foodController) {
-    if (nameController.text.isEmpty || priceController.text.isEmpty) {
+  updateItem(context, FoodController foodController) {
+    if (nameController.text.isEmpty ||
+        priceController.text.isEmpty ||
+        stockController.text.isEmpty) {
       return;
     }
 
     final newItem = condiment.copyWith(
         cost: double.parse(priceController.text),
+        stock: int.parse(stockController.text),
         name: nameController.text.trim(),
         time: DateTime.now());
 
