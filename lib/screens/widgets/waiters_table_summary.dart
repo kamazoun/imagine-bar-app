@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagine_bar/controllers/order_controller.dart';
@@ -8,7 +6,7 @@ import 'package:imagine_bar/screens/widgets/order_drinks_column.dart';
 import 'package:imagine_bar/screens/widgets/order_foods_column.dart';
 
 class WaitersTableSummary extends StatelessWidget {
-  final bool isRange;
+  final bool isRange; // Whether used in summary or in stats screen
 
   const WaitersTableSummary(this.isRange, {Key key}) : super(key: key);
   @override
@@ -64,24 +62,35 @@ class WaitersTableSummary extends StatelessWidget {
     final concatenated = Order.concatenateOrders(orders).values.toList()
       ..sort((o1, o2) => o2.at.compareTo(o1.at));
 
+    double total = 0.0;
+    concatenated.forEach((element) {
+      if (element.total > total) {
+        total = element.total;
+      }
+    });
+
     for (Order order in concatenated) {
-      r.add(DataRow(cells: [
-        DataCell(Text(order.waiterName)),
-        DataCell(OrderDrinksColumn(
-          order: order,
-        )),
-        DataCell(OrderFoodsColumn(
-          order: order,
-        )),
-        DataCell(Text('¢${order.total}')),
-        DataCell(Text('${order.at.toLocal()}')),
-        DataCell(order.paid
-            ? Text('Account Closed')
-            : ElevatedButton.icon(
-                onPressed: () => _closeWaiterAccount(order.waiterId),
-                icon: Icon(Icons.paid),
-                label: Text('Pay'))),
-      ]));
+      r.add(DataRow(
+          color: order.total == total
+              ? MaterialStateColor.resolveWith((states) => Colors.yellow)
+              : null, // TODO: double comparison! change to int?
+          cells: [
+            DataCell(Text(order.waiterName)),
+            DataCell(OrderDrinksColumn(
+              order: order,
+            )),
+            DataCell(OrderFoodsColumn(
+              order: order,
+            )),
+            DataCell(Text('¢${order.total}')),
+            DataCell(Text('${order.at.toLocal()}')),
+            DataCell(order.paid
+                ? Text('Account Closed')
+                : ElevatedButton.icon(
+                    onPressed: () => _closeWaiterAccount(order.waiterId),
+                    icon: Icon(Icons.paid),
+                    label: Text('Pay'))),
+          ]));
     }
 
     return r;
